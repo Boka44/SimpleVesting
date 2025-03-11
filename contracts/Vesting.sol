@@ -50,12 +50,15 @@ contract Vesting is ReentrancyGuard {
 
     function getVestingAmount() public view returns (uint256) {
         uint256 currentTime = block.timestamp;
+        // if the current time is before the cliff, the vested amount is 0
         if (currentTime < startTime + cliffDuration) {
             return 0;
         }
+        // if the current time is after the full vesting period, the vested amount is the total balance
         if (currentTime >= startTime + fullVestingPeriod) {
             return balance;
         }
+        // if the current time is between the cliff and the full vesting period, the vested amount is calculated linearly
         uint256 timeFromCliff = currentTime - (startTime + cliffDuration);
         uint256 vestingDuration = fullVestingPeriod - cliffDuration;
         // Vesting amount is calculated linearly, taking the time from the cliff to the current time and dividing it by the total vesting period

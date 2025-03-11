@@ -6,8 +6,6 @@ const { ethers } = require("hardhat");
 describe("Vesting", function () {
     let owner;
     let other;
-    let VestingContract;
-    let tokenContract;
     let Vesting;
     let Token;
     let startTime;
@@ -81,7 +79,7 @@ describe("Vesting", function () {
             const vestedAmount = await Vesting.getVestingAmount();
             expect(vestedAmount).to.equal(balance);
         });
-        // test that beneficiary can release tokens
+
         it("Should allow beneficiary to release tokens", async function () {
             const targetTime = startTime + cliffDuration + fullVestingPeriod + 1;
             
@@ -94,7 +92,6 @@ describe("Vesting", function () {
             expect(balanceAfter).to.equal(balanceBefore + balance);   
         });
 
-        //  - **Withdrawal Logic:** The beneficiary can release tokens without double withdrawals.
         it("Should not allow double withdrawals", async function () {
             const targetTime = startTime + cliffDuration + fullVestingPeriod + 1;
             
