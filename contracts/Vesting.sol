@@ -25,8 +25,6 @@ contract Vesting is ReentrancyGuard {
     error NoTokensToRelease();
     error TransferFailed();
     error InvalidParameters();
-    error InvalidTimestamp();
-    error InvalidDuration();
 
     constructor(
         address _token,
